@@ -61,6 +61,7 @@ export const signup = async (req,res)=>{
 
 export const login = async (req,res)=>{
      const {username,password} = req.body;
+     console.log(username,password);
      if(!username || !password)
      {
         return res.status(500).json({
@@ -83,11 +84,11 @@ export const login = async (req,res)=>{
         console.log('namaste ji');
         console.log(user.password);
         generateTokenAndSetCookie(res,user._id);
+        console.log('new returning response',user)
         return res.status(200).json({
             _id:user._id,
-            fullName:user.fullName,
-            username: user.userName,
-            profilePic:user.profilePic
+            data:user,
+            message:"successfully logged in"
         })
      }
      else{

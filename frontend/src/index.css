@@ -1,4 +1,33 @@
-:root {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  background:linear-gradient(rgba(0, 0, 0, 0.658),rgba(0, 0, 0, 0.484)) ,url('./assets/backg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  overflow:hidden;
+}
+
+/* scroll-bar modification */
+::-webkit-scrollbar{
+  cursor:pointer;
+  width:8px;
+}
+::-webkit-scrollbar-track{
+  cursor:pointer;
+  background:rgba(0, 0, 0, 0.4);
+}
+::-webkit-scrollbar-thumb{
+  background:rgba(33, 236, 111, 0.463); 
+}
+::-webkit-scrollbar-thumb:hover{
+  background:rgba(22, 239, 95, 0.943);
+}
+
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,4 +94,7 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
+
+
+/* in mdn , it was written not good for production , may not be visible to all users/web-browsers */

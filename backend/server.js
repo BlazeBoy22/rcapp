@@ -19,6 +19,7 @@ app.listen(PORT,()=>
     console.log(`server running on port ${PORT}`)
 })
 
+ 
 app.use(cookieParser())
 app.use(express.json());
 app.use('/api/auth',authRoutes);

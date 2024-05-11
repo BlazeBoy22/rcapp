@@ -1,12 +1,40 @@
-import conversationmodel from "../models/conversation.model.js ";
+import conversationmodel from "../models/conversation.model.js";
 import messages from "../models/messages.model.js";
+import User from "../models/user.model.js";
 
 
 export const sendMessage = async (req,res)=>{
+    console.log('hi')
      try{
-        const {message}=req.body;
+        console.log('inside send message');
+        const {text}=req.body;
+        const message = text;
+        console.log('printing message body ',req.body);
+        if(!message)
+                return res.status(505).json({
+            success:false,
+            message:"empty message"
+            })
         const {id:receiverId} = req.params;
         const senderId = req.user._id;
+        console.log(senderId);
+        const user = await User.findOne({_id:senderId})
+        console.log('hello hi');
+        console.log(user);
+        if(!user)
+                return res.status(501).json({
+                    success:false,
+                    message:"invalid user"
+            })
+        const receiver = User.find({_id:receiverId});
+        console.log('hi');
+        if(!receiver)
+            {
+                return res.status(501).json({
+                    success:false,
+                    message:"no such user exists"
+                })
+            }
         let conversation = await conversationmodel.findOne({
             participants:{$all:[senderId,receiverId]},
         })
@@ -43,8 +71,8 @@ export const sendMessage = async (req,res)=>{
 
      }catch(error)
      {
-        console.log("error in send Message controller :",error.message);
-        res.status(500).json({error:"Internal Server error"})
+        console.log("error in send Message controller :",error);
+       return res.status(500).json({error:"Internal Server error"})
      }
 }
 export const getMessage = async(req,res)=>{
