@@ -6,14 +6,19 @@ import sendMessages from '../../hooks/useSendMessage'
 
 function MessageInput() {
    const {loading,useSendMessages} = sendMessages();
-   console.log('ayo',loading);
+   console.log('ayo from input',loading);
   const [message,setMessages]=useState('');
   const handleSubmit = async(e)=>{
     e.preventDefault();
     console.log('ye message bheja ja rha hai ',message);
     console.log('ready booz')
+      if(message.length>0)
+        {
      const res = await useSendMessages(message);
+     setMessages('');
+        }
   }
+
   return (
     <form className='px-4 my-3 relative' onSubmit={handleSubmit}>
         <div className='w-full'>

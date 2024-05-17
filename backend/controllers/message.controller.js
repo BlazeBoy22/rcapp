@@ -1,7 +1,8 @@
 import conversationmodel from "../models/conversation.model.js";
 import messages from "../models/messages.model.js";
 import User from "../models/user.model.js";
-
+import { getReceiverSocketId } from "../socket/socket.js";
+import { io } from "../socket/socket.js";
 
 export const sendMessage = async (req,res)=>{
     console.log('hi')
@@ -60,13 +61,22 @@ export const sendMessage = async (req,res)=>{
                    conv =  await conversation.save();
                     console.log("i io")
                 }
+
+
                 //find out the use of populate
+                const receiverSocketId = getReceiverSocketId(receiverId)
+                if(receiverSocketId)
+                    {
+                        console.log('reveiver id of socket',receiverSocketId,newMessage)
+                        io.to(receiverSocketId).emit('newMessage',newMessage)
+                    }
                 return res.status(200).json({
                     success:true,
                     message:"conversation and message successfully created",
-                    message:message,
+                    messages:newMessage,
                     conversation:conv
                 })
+                
                 //await promise.all([conversation.save(),newMessage.save()]) ----> so this command will save both in db parallely 
 
      }catch(error)

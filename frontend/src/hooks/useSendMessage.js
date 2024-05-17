@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 
 const sendMessages =  ()=>{
     const [loading,setLoading] = useState(false);
-    const {selectedconversation,setSelectedConversation} = useStore();
+    const {selectedconversation,setSelectedConversation,setMessages,messages} = useStore();
     const {authUser} =  useAuthContext();
     console.log('fsdfds',selectedconversation,authUser);
 
@@ -13,25 +13,33 @@ const sendMessages =  ()=>{
         console.log('use send message',message,selectedconversation._id);
         console.log('why this kolaveri dddd')
         setLoading(true);
-        const messages = {text:message}
+        const messages1 = {text:message}
         try{
-            alert('message hai bhai log',message);
+            
             if(!selectedconversation || !authUser)
                 return ;
             const res = await fetch(`/api/messages/send/${selectedconversation._id}`,
                {
                 method:"POST",
                 headers:{"content-type":"application/json"},
-                body: JSON.stringify(messages)
+                body: JSON.stringify(messages1)
 
                }
             );
             const data = await res.json();
+                    
+                    console.log('checkingdata',data);
+                    // alert('ayo',messages)
+                    console.log('problem solving',messages)
+                    setMessages([...messages,data.messages])
+               
             toast.success('message send successfully');
+            
             console.log(data);
             
         }catch(error)
         {
+            console.log("ye hai error ",error.message)
             toast.error('cannot send messages');
         }finally{
             setLoading(false);

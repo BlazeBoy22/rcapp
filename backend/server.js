@@ -1,19 +1,19 @@
 import express from 'express';
 import dotenv from "dotenv"
 import cookieParser from 'cookie-parser';
-
+import { app ,server} from './socket/socket.js';
 import dbConnect from './db/dbConnect.js';
 
 import authRoutes from "./routes.js/auth.routes.js"
 import messageRoutes from './routes.js/message.routes.js'
 import userRoutes from './routes.js/user.routes.js'
 
-const app = express();
+ 
 
 dotenv.config();
 //is it necessary to write port in caps in env
 const PORT = process.env.PORT || 5000
-app.listen(PORT,()=>
+server.listen(PORT,()=>
 {
     dbConnect();
     console.log(`server running on port ${PORT}`)

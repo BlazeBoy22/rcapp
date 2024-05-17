@@ -31,8 +31,8 @@ const useLogin =  ( )=>{
             throw new error;
         }
      
-        setAuthUser(data.data.userName );
-        console.log("login",data);
+        setAuthUser(data.data );
+        console.log("login",data.data);
         // alert(data.data.userName);
         //you need to specify key value for storing something in localStorage, otherwise it will not work
         localStorage.setItem('chat-user',JSON.stringify(data.data) );
